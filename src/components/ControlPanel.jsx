@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Copy, Trash2, Type } from 'lucide-react';
+import { Copy, Trash2, Type, Search } from 'lucide-react';
 import { CASE_TYPES } from '../utils/caseConverter';
 
 /**
  * Control panel component
- * Contains buttons for text manipulation (copy, clear, case conversion)
+ * Contains buttons for text manipulation (copy, clear, case conversion, find & replace)
  */
-const ControlPanel = ({ text, onTextChange, onCopy, onClear }) => {
+const ControlPanel = ({ text, onTextChange, onCopy, onClear, showFindReplace, onToggleFindReplace }) => {
   const [caseType, setCaseType] = useState('');
 
   const handleCaseChange = (e) => {
@@ -53,6 +53,20 @@ const ControlPanel = ({ text, onTextChange, onCopy, onClear }) => {
         >
           <Trash2 className="w-4 h-4" />
           <span className="hidden sm:inline">Clear Text</span>
+        </button>
+
+        {/* Find & Replace Button */}
+        <button
+          onClick={onToggleFindReplace}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+            showFindReplace
+              ? 'bg-purple-600 hover:bg-purple-700 text-white'
+              : 'bg-purple-500 hover:bg-purple-600 text-white'
+          }`}
+          title="Find and replace text"
+        >
+          <Search className="w-4 h-4" />
+          <span className="hidden sm:inline">Find & Replace</span>
         </button>
 
         {/* Case Converter Dropdown */}

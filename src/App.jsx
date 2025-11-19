@@ -3,8 +3,10 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { useTheme } from './hooks/useTheme';
 import { useTextAnalysis } from './hooks/useTextAnalysis';
 import { convertCase } from './utils/caseConverter';
+import { performReplace } from './utils/regexHelper';
 import StatsDisplay from './components/StatsDisplay';
 import ControlPanel from './components/ControlPanel';
+import FindReplacePanel from './components/FindReplacePanel';
 import TextArea from './components/TextArea';
 import KeywordDensity from './components/KeywordDensity';
 import SocialMediaPresets from './components/SocialMediaPresets';
@@ -28,6 +30,9 @@ function App() {
   // Toast notification state
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+
+  // Find & Replace panel state
+  const [showFindReplace, setShowFindReplace] = useState(false);
 
   // Show toast notification
   const showNotification = (message) => {
@@ -60,6 +65,34 @@ function App() {
     setText('');
   };
 
+  // Handle find and replace
+  const handleReplace = (find, replace, options) => {
+    const { isRegex, isCaseSensitive, replaceAll } = options;
+    const { newText, count } = performReplace(
+      text,
+      find,
+      replace,
+      isRegex,
+      isCaseSensitive,
+      replaceAll
+    );
+
+    if (count > 0) {
+      setText(newText);
+      const message = count === 1
+        ? 'Replaced 1 occurrence'
+        : `Replaced ${count} occurrences`;
+      showNotification(message);
+    } else {
+      showNotification('No matches found');
+    }
+  };
+
+  // Toggle find and replace panel
+  const toggleFindReplace = () => {
+    setShowFindReplace(!showFindReplace);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors flex flex-col">
       {/* Header */}
@@ -86,7 +119,17 @@ function App() {
         onTextChange={handleTextChange}
         onCopy={handleCopy}
         onClear={handleClear}
+        showFindReplace={showFindReplace}
+        onToggleFindReplace={toggleFindReplace}
       />
+
+      {/* Find & Replace Panel */}
+      {showFindReplace && (
+        <FindReplacePanel
+          onReplace={handleReplace}
+          onClose={() => setShowFindReplace(false)}
+        />
+      )}
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col lg:flex-row gap-6 p-4 lg:p-6">
