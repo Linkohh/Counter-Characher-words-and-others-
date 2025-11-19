@@ -7,12 +7,17 @@ import StatsDisplay from './components/StatsDisplay';
 import ControlPanel from './components/ControlPanel';
 import TextArea from './components/TextArea';
 import KeywordDensity from './components/KeywordDensity';
+import SocialMediaPresets from './components/SocialMediaPresets';
+import WordGoal from './components/WordGoal';
 import ThemeToggle from './components/ThemeToggle';
 import Toast from './components/Toast';
 
 function App() {
   // LocalStorage for text persistence
   const [text, setText] = useLocalStorage('wordCounterText', '');
+
+  // LocalStorage for word goal persistence
+  const [wordGoal, setWordGoal] = useLocalStorage('wordCounterGoal', 0);
 
   // Theme management
   const { isDark, toggleTheme } = useTheme();
@@ -94,9 +99,20 @@ function App() {
           />
         </div>
 
-        {/* Keyword Density Sidebar */}
+        {/* Sidebar with tools */}
         <div className="lg:w-80 flex-shrink-0">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-6">
+            {/* Word Goal */}
+            <WordGoal
+              wordCount={metrics.words}
+              savedGoal={wordGoal}
+              onGoalChange={setWordGoal}
+            />
+
+            {/* Social Media Presets */}
+            <SocialMediaPresets characterCount={metrics.characters} />
+
+            {/* Keyword Density */}
             <KeywordDensity keywords={metrics.keywords} totalWords={metrics.words} />
           </div>
         </div>

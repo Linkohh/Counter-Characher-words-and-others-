@@ -14,6 +14,13 @@ export const analyzeText = (text) => {
       pages: 0,
       readingTime: 0,
       speakingTime: 0,
+      lines: 0,
+      uniqueWords: 0,
+      avgWordLength: 0,
+      avgSentenceLength: 0,
+      longestWord: '',
+      shortestSentence: '',
+      longestSentence: '',
     };
   }
 
@@ -27,12 +34,15 @@ export const analyzeText = (text) => {
   const wordArray = text.trim().split(/\s+/).filter(word => word.length > 0);
   const words = wordArray.length;
 
-  // Sentence count - split by sentence-ending punctuation
-  // Matches ., !, ? followed by space or end of string
-  const sentences = text
+  // Line count - split by newlines
+  const lines = text.split('\n').length;
+
+  // Sentence array for detailed analysis
+  const sentenceArray = text
     .split(/[.!?]+/)
     .filter(sentence => sentence.trim().length > 0)
-    .length;
+    .map(sentence => sentence.trim());
+  const sentences = sentenceArray.length;
 
   // Paragraph count - split by double line breaks
   const paragraphs = text
@@ -49,6 +59,40 @@ export const analyzeText = (text) => {
   // Speaking time (130 WPM - average speaking speed)
   const speakingTime = Math.ceil(words / 130);
 
+  // Unique words - convert to lowercase for comparison
+  const uniqueWordsSet = new Set(
+    wordArray.map(word => word.toLowerCase().replace(/[^\w']/g, ''))
+  );
+  const uniqueWords = uniqueWordsSet.size;
+
+  // Average word length - strip punctuation for accurate calculation
+  const cleanWords = wordArray.map(word => word.replace(/[^\w']/g, ''));
+  const totalWordLength = cleanWords.reduce((sum, word) => sum + word.length, 0);
+  const avgWordLength = words > 0 ? (totalWordLength / words).toFixed(1) : 0;
+
+  // Average sentence length (in words)
+  const avgSentenceLength = sentences > 0
+    ? Math.round(words / sentences)
+    : 0;
+
+  // Longest word
+  const longestWord = cleanWords.reduce((longest, word) =>
+    word.length > longest.length ? word : longest, ''
+  );
+
+  // Longest and shortest sentences
+  let longestSentence = '';
+  let shortestSentence = sentenceArray[0] || '';
+
+  sentenceArray.forEach(sentence => {
+    if (sentence.length > longestSentence.length) {
+      longestSentence = sentence;
+    }
+    if (sentence.length < shortestSentence.length && sentence.length > 0) {
+      shortestSentence = sentence;
+    }
+  });
+
   return {
     characters,
     charactersNoSpaces,
@@ -58,6 +102,13 @@ export const analyzeText = (text) => {
     pages: pages || 0,
     readingTime: readingTime || 0,
     speakingTime: speakingTime || 0,
+    lines,
+    uniqueWords,
+    avgWordLength: parseFloat(avgWordLength) || 0,
+    avgSentenceLength,
+    longestWord,
+    shortestSentence,
+    longestSentence,
   };
 };
 
