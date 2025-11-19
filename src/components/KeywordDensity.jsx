@@ -8,59 +8,68 @@ import { calculateDensity } from '../utils/keywordExtractor';
 const KeywordDensity = ({ keywords, totalWords }) => {
   if (keywords.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Hash className="w-5 h-5 text-blue-500 dark:text-blue-400" />
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
+            <Hash className="w-5 h-5" />
+          </div>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Keyword Density
           </h2>
         </div>
-        <p className="text-gray-500 dark:text-gray-400 text-sm text-center py-8">
-          Start typing to see keyword analysis
-        </p>
+        <div className="flex flex-col items-center justify-center py-8 text-center">
+          <div className="w-12 h-12 bg-slate-100 dark:bg-slate-700/50 rounded-full flex items-center justify-center mb-3">
+            <Hash className="w-6 h-6 text-slate-400" />
+          </div>
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+            Start typing to see keyword analysis
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <Hash className="w-5 h-5 text-blue-500 dark:text-blue-400" />
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
+          <Hash className="w-5 h-5" />
+        </div>
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white">
           Keyword Density
         </h2>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {keywords.map((keyword, index) => {
           const density = calculateDensity(keyword.count, totalWords);
           const percentage = parseFloat(density);
 
           return (
-            <div key={keyword.word} className="space-y-1">
-              <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400 w-5">
+            <div key={keyword.word} className="group">
+              <div className="flex items-center justify-between text-sm mb-1.5">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-slate-400 w-4">
                     #{index + 1}
                   </span>
-                  <span className="font-medium text-gray-900 dark:text-white">
+                  <span className="font-semibold text-slate-700 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                     {keyword.word}
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-600 dark:text-gray-300">
+                <div className="flex items-center gap-3">
+                  <span className="text-slate-500 dark:text-slate-400 text-xs bg-slate-100 dark:bg-slate-700/50 px-2 py-0.5 rounded-full">
                     {keyword.count}×
                   </span>
-                  <span className="font-semibold text-blue-600 dark:text-blue-400 min-w-[3.5rem] text-right">
+                  <span className="font-bold text-indigo-600 dark:text-indigo-400 min-w-[3rem] text-right">
                     {density}%
                   </span>
                 </div>
               </div>
 
               {/* Progress bar */}
-              <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 transition-all duration-300"
+                  className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500 ease-out shadow-sm"
                   style={{ width: `${Math.min(percentage * 10, 100)}%` }}
                 />
               </div>
@@ -69,9 +78,9 @@ const KeywordDensity = ({ keywords, totalWords }) => {
         })}
       </div>
 
-      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-          <TrendingUp className="w-4 h-4" />
+      <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+        <div className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+          <TrendingUp className="w-3.5 h-3.5" />
           <span>Stop words filtered • Top 5 keywords shown</span>
         </div>
       </div>

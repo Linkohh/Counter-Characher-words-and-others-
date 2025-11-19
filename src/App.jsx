@@ -61,47 +61,59 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors flex flex-col">
+    <div className="min-h-screen transition-colors flex flex-col">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Word Counter
-            </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              Professional text analysis & word counting tool
-            </p>
+      <header className="sticky top-0 z-50 bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-500/20">
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+                Word Counter
+              </h1>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                Professional Analysis Tool
+              </p>
+            </div>
           </div>
           <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
         </div>
       </header>
 
-      {/* Stats Display */}
-      <StatsDisplay metrics={metrics} />
-
-      {/* Control Panel */}
-      <ControlPanel
-        text={text}
-        onTextChange={handleTextChange}
-        onCopy={handleCopy}
-        onClear={handleClear}
-      />
-
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col lg:flex-row gap-6 p-4 lg:p-6">
-        {/* Text Editor */}
-        <div className="flex-1 min-w-0">
-          <TextArea
-            value={text}
-            onChange={handleTextChange}
-            placeholder="Start typing or paste your text here..."
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        {/* Stats Display */}
+        <div className="mb-8">
+          <StatsDisplay metrics={metrics} />
+        </div>
+
+        {/* Control Panel */}
+        <div className="mb-6">
+          <ControlPanel
+            text={text}
+            onTextChange={handleTextChange}
+            onCopy={handleCopy}
+            onClear={handleClear}
           />
         </div>
 
-        {/* Sidebar with tools */}
-        <div className="lg:w-80 flex-shrink-0">
-          <div className="sticky top-24 space-y-6">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Text Editor */}
+          <div className="flex-1 min-w-0">
+            <TextArea
+              value={text}
+              onChange={handleTextChange}
+              placeholder="Start typing or paste your text here..."
+            />
+          </div>
+
+          {/* Sidebar with tools */}
+          <div className="lg:w-80 flex-shrink-0 space-y-6">
             {/* Word Goal */}
             <WordGoal
               wordCount={metrics.words}
@@ -116,7 +128,7 @@ function App() {
             <KeywordDensity keywords={metrics.keywords} totalWords={metrics.words} />
           </div>
         </div>
-      </div>
+      </main>
 
       {/* Toast Notification */}
       {showToast && (

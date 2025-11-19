@@ -57,84 +57,103 @@ const SocialMediaPresets = ({ characterCount }) => {
 
   // Get progress bar color
   const getProgressColor = () => {
-    if (!status) return 'bg-blue-500';
+    if (!status) return 'bg-indigo-500';
 
     switch (status.color) {
       case 'green':
-        return 'bg-green-500';
+        return 'bg-emerald-500';
       case 'yellow':
-        return 'bg-yellow-500';
+        return 'bg-amber-500';
       case 'red':
-        return 'bg-red-500';
+        return 'bg-rose-500';
       default:
-        return 'bg-blue-500';
+        return 'bg-indigo-500';
     }
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <AtSign className="w-5 h-5 text-blue-500 dark:text-blue-400" />
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
+          <AtSign className="w-5 h-5" />
+        </div>
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white">
           Social Media Limits
         </h2>
       </div>
 
       {/* Platform selector */}
-      <select
-        value={selectedPlatform}
-        onChange={(e) => setSelectedPlatform(e.target.value)}
-        className="w-full px-3 py-2 mb-4 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-        aria-label="Select social media platform"
-      >
-        <option value="">Select platform...</option>
-        {PLATFORMS.map((p) => (
-          <option key={p.id} value={p.id}>
-            {p.icon} {p.name} ({p.limit} chars)
-          </option>
-        ))}
-      </select>
+      <div className="mb-6">
+        <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+          Select Platform
+        </label>
+        <div className="relative">
+          <select
+            value={selectedPlatform}
+            onChange={(e) => setSelectedPlatform(e.target.value)}
+            className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all appearance-none cursor-pointer"
+            aria-label="Select social media platform"
+          >
+            <option value="">Choose a platform...</option>
+            {PLATFORMS.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.icon} {p.name} ({p.limit} chars)
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+            <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </div>
 
       {/* Character count display */}
-      {platform && (
-        <div className="space-y-3">
+      {platform ? (
+        <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700/50">
           {/* Count with status */}
-          <div className={`flex items-center justify-between p-3 rounded-lg ${getColorClasses()}`}>
+          <div className={`flex items-center justify-between p-4 rounded-xl transition-colors ${status?.color === 'green' ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30' :
+              status?.color === 'yellow' ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-100 dark:border-amber-900/30' :
+                'bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border border-rose-100 dark:border-rose-900/30'
+            }`}>
             <div className="flex items-center gap-2">
-              {status && <status.icon className="w-4 h-4" />}
+              {status && <status.icon className="w-5 h-5" />}
               <span className="font-medium">{status?.label}</span>
             </div>
-            <span className="font-bold text-lg">
-              {characterCount.toLocaleString()}/{platform.limit.toLocaleString()}
+            <span className="font-bold text-xl tracking-tight">
+              {characterCount.toLocaleString()}
+              <span className="text-sm font-normal opacity-70 ml-1">/{platform.limit.toLocaleString()}</span>
             </span>
           </div>
 
           {/* Progress bar */}
-          <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-3 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden p-0.5">
             <div
-              className={`h-full ${getProgressColor()} transition-all duration-300`}
+              className={`h-full rounded-full ${getProgressColor()} transition-all duration-500 ease-out shadow-sm`}
               style={{ width: `${Math.min((characterCount / platform.limit) * 100, 100)}%` }}
             />
           </div>
 
           {/* Remaining characters */}
-          <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+          <p className="text-sm text-center font-medium">
             {characterCount <= platform.limit ? (
-              <span>{(platform.limit - characterCount).toLocaleString()} characters remaining</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                <span className="text-slate-900 dark:text-white font-bold">{(platform.limit - characterCount).toLocaleString()}</span> characters remaining
+              </span>
             ) : (
-              <span className="text-red-600 dark:text-red-400">
-                {(characterCount - platform.limit).toLocaleString()} characters over limit
+              <span className="text-rose-600 dark:text-rose-400">
+                <span className="font-bold">{(characterCount - platform.limit).toLocaleString()}</span> characters over limit
               </span>
             )}
           </p>
         </div>
-      )}
-
-      {/* Empty state */}
-      {!platform && (
-        <p className="text-gray-500 dark:text-gray-400 text-sm text-center py-4">
-          Select a platform to check character limits
-        </p>
+      ) : (
+        <div className="pt-6 border-t border-slate-100 dark:border-slate-700/50 text-center">
+          <p className="text-slate-500 dark:text-slate-400 text-sm">
+            Select a platform to check character limits
+          </p>
+        </div>
       )}
     </div>
   );

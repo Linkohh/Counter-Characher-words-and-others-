@@ -19,17 +19,23 @@ const TextArea = ({ value, onChange, placeholder }) => {
   }, [value]);
 
   return (
-    <div className="flex-1 overflow-auto">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="relative group">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl opacity-0 group-focus-within:opacity-20 transition duration-500 blur"></div>
+      <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors">
         <textarea
           ref={textareaRef}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full min-h-[60vh] p-6 text-lg leading-relaxed bg-transparent border-2 border-gray-200 dark:border-gray-700 rounded-lg focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none resize-none text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition-colors"
+          className="w-full min-h-[60vh] p-8 text-lg leading-relaxed bg-transparent border-none focus:ring-0 resize-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
           spellCheck="true"
           autoFocus
         />
+
+        {/* Character count indicator at bottom right */}
+        <div className="absolute bottom-4 right-4 text-xs font-medium text-slate-400 dark:text-slate-500 pointer-events-none bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm px-2 py-1 rounded-md">
+          {value.length} chars
+        </div>
       </div>
     </div>
   );

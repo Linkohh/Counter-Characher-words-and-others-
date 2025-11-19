@@ -101,25 +101,28 @@ const StatsDisplay = ({ metrics }) => {
     return (
       <div
         key={stat.label}
-        className="flex items-center gap-2"
+        className={`group relative p-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 ${stat.primary
+            ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30'
+            : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50'
+          }`}
       >
-        <Icon className={`w-4 h-4 flex-shrink-0 ${
-          stat.primary
-            ? 'text-blue-500 dark:text-blue-400'
-            : 'text-gray-500 dark:text-gray-400'
-        }`} />
-        <div className="min-w-0">
-          <div className={`text-xs text-gray-500 dark:text-gray-400 mb-0.5 ${
-            stat.primary ? 'font-medium' : ''
-          }`}>
+        <div className="flex items-start justify-between mb-2">
+          <div className={`p-2 rounded-lg ${stat.primary
+              ? 'bg-white/20'
+              : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors'
+            }`}>
+            <Icon className="w-5 h-5" />
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <div className={`text-sm font-medium ${stat.primary ? 'text-indigo-100' : 'text-slate-500 dark:text-slate-400'
+            }`}>
             {stat.label}
           </div>
-          <div className={`font-semibold ${stat.truncate ? 'truncate max-w-[100px]' : ''} ${
-            stat.primary
-              ? 'text-lg text-gray-900 dark:text-white'
-              : 'text-base text-gray-700 dark:text-gray-300'
-          }`} title={stat.truncate ? stat.value : undefined}>
-            {stat.value}
+          <div className={`text-2xl font-bold tracking-tight ${stat.primary ? 'text-white' : 'text-slate-900 dark:text-white'
+            }`} title={stat.truncate ? stat.value : undefined}>
+            {stat.truncate && stat.value.length > 12 ? `${stat.value.substring(0, 12)}...` : stat.value}
           </div>
         </div>
       </div>
@@ -127,36 +130,33 @@ const StatsDisplay = ({ metrics }) => {
   };
 
   return (
-    <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        {/* Primary stats - always visible */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
-          {primaryStats.map(renderStat)}
-        </div>
+    <div className="space-y-6">
+      {/* Primary stats grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+        {primaryStats.map(renderStat)}
+      </div>
 
-        {/* Secondary stats - expandable */}
-        {showMore && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-            {secondaryStats.map(renderStat)}
-          </div>
-        )}
+      {/* Secondary stats - expandable */}
+      <div className={`grid grid-cols-2 md:grid-cols-5 gap-4 transition-all duration-500 ease-in-out overflow-hidden ${showMore ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0'
+        }`}>
+        {secondaryStats.map(renderStat)}
+      </div>
 
-        {/* Toggle button */}
+      {/* Toggle button */}
+      <div className="flex justify-center">
         <button
           onClick={() => setShowMore(!showMore)}
-          className="flex items-center justify-center gap-1 w-full mt-3 py-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-          aria-expanded={showMore}
-          aria-label={showMore ? 'Show less statistics' : 'Show more statistics'}
+          className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all shadow-sm hover:shadow-md"
         >
           {showMore ? (
             <>
-              <ChevronUp className="w-4 h-4" />
-              <span>Less stats</span>
+              <span>Show Less</span>
+              <ChevronUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
             </>
           ) : (
             <>
-              <ChevronDown className="w-4 h-4" />
-              <span>More stats</span>
+              <span>Show More Stats</span>
+              <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </>
           )}
         </button>
