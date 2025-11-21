@@ -79,8 +79,8 @@ const ControlPanel = ({ text, onTextChange, onCopy, onClear, showFindReplace, on
         <button
           onClick={onToggleFindReplace}
           className={`glass-button flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${showFindReplace
-              ? 'bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 ring-2 ring-indigo-500/20'
-              : 'text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400'
+            ? 'bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 ring-2 ring-indigo-500/20'
+            : 'text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400'
             }`}
         >
           <Search className="w-4 h-4" />
@@ -107,8 +107,7 @@ const ControlPanel = ({ text, onTextChange, onCopy, onClear, showFindReplace, on
           </div>
         </div>
       </div>
-    </div >
-    </div >
+    </div>
   );
 };
 
