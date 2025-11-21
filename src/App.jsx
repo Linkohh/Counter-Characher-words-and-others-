@@ -11,9 +11,11 @@ import TextArea from './components/TextArea';
 import KeywordDensity from './components/KeywordDensity';
 import SocialMediaPresets from './components/SocialMediaPresets';
 import WordGoal from './components/WordGoal';
+import { Info } from 'lucide-react';
 import ThemeToggle from './components/ThemeToggle';
 import Toast from './components/Toast';
 import FluidBackground from './components/FluidBackground';
+import AboutModal from './components/AboutModal';
 
 function App() {
   // LocalStorage for text persistence
@@ -34,6 +36,9 @@ function App() {
 
   // Find & Replace panel state
   const [showFindReplace, setShowFindReplace] = useState(false);
+
+  // About Modal state
+  const [showAbout, setShowAbout] = useState(false);
 
   // Show toast notification
   const showNotification = (message) => {
@@ -115,9 +120,20 @@ function App() {
               </p>
             </div>
           </div>
-          <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowAbout(true)}
+              className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors"
+              aria-label="About"
+            >
+              <Info className="w-5 h-5" />
+            </button>
+            <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
+          </div>
         </div>
       </header>
+
+      <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} />
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
