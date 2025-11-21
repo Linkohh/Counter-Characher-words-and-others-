@@ -74,10 +74,11 @@ const WordGoal = ({ wordCount, savedGoal = 0, onGoalChange }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
-          <Target className="w-5 h-5" />
+    <div className="glass-panel p-6 rounded-2xl">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <Target className="w-5 h-5 text-indigo-500" />
+          <h3 className="font-semibold text-slate-900 dark:text-white">Daily Goal</h3>
         </div>
         <h2 className="text-lg font-bold text-slate-900 dark:text-white">
           Word Goal

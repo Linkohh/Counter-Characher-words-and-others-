@@ -101,27 +101,22 @@ const StatsDisplay = ({ metrics }) => {
     return (
       <div
         key={stat.label}
-        className={`group relative p-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 ${stat.primary
-            ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30'
-            : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50'
-          }`}
+        className={`group relative p-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 glass-panel hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/10`}
       >
         <div className="flex items-start justify-between mb-2">
           <div className={`p-2 rounded-lg ${stat.primary
-              ? 'bg-white/20'
-              : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors'
+            ? 'bg-indigo-500/20 text-indigo-600 dark:text-indigo-400'
+            : 'bg-slate-100/50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors'
             }`}>
             <Icon className="w-5 h-5" />
           </div>
         </div>
 
         <div className="space-y-1">
-          <div className={`text-sm font-medium ${stat.primary ? 'text-indigo-100' : 'text-slate-500 dark:text-slate-400'
-            }`}>
+          <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
             {stat.label}
           </div>
-          <div className={`text-2xl font-bold tracking-tight ${stat.primary ? 'text-white' : 'text-slate-900 dark:text-white'
-            }`} title={stat.truncate ? stat.value : undefined}>
+          <div className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white" title={stat.truncate ? stat.value : undefined}>
             {stat.truncate && stat.value.length > 12 ? `${stat.value.substring(0, 12)}...` : stat.value}
           </div>
         </div>
