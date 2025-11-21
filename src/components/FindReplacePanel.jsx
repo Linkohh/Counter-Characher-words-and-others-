@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { X, Replace, ReplaceAll } from 'lucide-react';
 import { isValidRegex } from '../utils/regexHelper';
 
@@ -13,17 +13,8 @@ const FindReplacePanel = ({ onReplace, onClose }) => {
   const [isRegex, setIsRegex] = useState(false);
   const [isCaseSensitive, setIsCaseSensitive] = useState(false);
 
-  // Validation state
-  const [hasError, setHasError] = useState(false);
-
-  // Validate regex pattern when it changes
-  useEffect(() => {
-    if (isRegex && findTerm) {
-      setHasError(!isValidRegex(findTerm));
-    } else {
-      setHasError(false);
-    }
-  }, [findTerm, isRegex]);
+  // Derived state for validation
+  const hasError = isRegex && findTerm ? !isValidRegex(findTerm) : false;
 
   // Handle replace action
   const handleReplace = (replaceAll = false) => {
@@ -60,11 +51,10 @@ const FindReplacePanel = ({ onReplace, onClose }) => {
                 value={findTerm}
                 onChange={(e) => setFindTerm(e.target.value)}
                 placeholder="Find..."
-                className={`w-full px-3 py-2 bg-white dark:bg-gray-700 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  hasError
-                    ? 'border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 dark:border-gray-600'
-                }`}
+                className={`w-full px-3 py-2 bg-white dark:bg-gray-700 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${hasError
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-gray-300 dark:border-gray-600'
+                  }`}
                 title={hasError ? 'Invalid regular expression' : ''}
               />
               {hasError && (

@@ -14,7 +14,7 @@ export const safeCreateRegex = (pattern, flags = '') => {
 
   try {
     return new RegExp(pattern, flags);
-  } catch (error) {
+  } catch {
     // Pattern is invalid (e.g., unclosed bracket, invalid escape)
     return null;
   }

@@ -39,22 +39,6 @@ const SocialMediaPresets = ({ characterCount }) => {
 
   const status = getStatus();
 
-  // Get color classes based on status
-  const getColorClasses = () => {
-    if (!status) return '';
-
-    switch (status.color) {
-      case 'green':
-        return 'text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30';
-      case 'yellow':
-        return 'text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30';
-      case 'red':
-        return 'text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30';
-      default:
-        return '';
-    }
-  };
-
   // Get progress bar color
   const getProgressColor = () => {
     if (!status) return 'bg-indigo-500';
@@ -114,8 +98,8 @@ const SocialMediaPresets = ({ characterCount }) => {
         <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700/50">
           {/* Count with status */}
           <div className={`flex items-center justify-between p-4 rounded-xl transition-colors ${status?.color === 'green' ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30' :
-              status?.color === 'yellow' ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-100 dark:border-amber-900/30' :
-                'bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border border-rose-100 dark:border-rose-900/30'
+            status?.color === 'yellow' ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-100 dark:border-amber-900/30' :
+              'bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border border-rose-100 dark:border-rose-900/30'
             }`}>
             <div className="flex items-center gap-2">
               {status && <status.icon className="w-5 h-5" />}

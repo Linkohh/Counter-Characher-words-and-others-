@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Target, Trophy, Zap } from 'lucide-react';
 
 /**
@@ -15,17 +15,18 @@ const PRESETS = [
   { label: '2500', value: 2500, description: 'Essay' },
 ];
 
-const WordGoal = ({ wordCount, savedGoal, onGoalChange }) => {
-  const [goal, setGoal] = useState(savedGoal || 0);
-  const [inputValue, setInputValue] = useState(savedGoal?.toString() || '');
+const WordGoal = ({ wordCount, savedGoal = 0, onGoalChange }) => {
+  const [prevSavedGoal, setPrevSavedGoal] = useState(savedGoal);
+  const [inputValue, setInputValue] = useState(savedGoal > 0 ? savedGoal.toString() : '');
 
-  // Sync with saved goal
-  useEffect(() => {
-    if (savedGoal !== undefined) {
-      setGoal(savedGoal);
-      setInputValue(savedGoal > 0 ? savedGoal.toString() : '');
-    }
-  }, [savedGoal]);
+  // Sync input value with saved goal (adjust state during render)
+  if (savedGoal !== prevSavedGoal) {
+    setPrevSavedGoal(savedGoal);
+    setInputValue(savedGoal > 0 ? savedGoal.toString() : '');
+  }
+
+  // Use savedGoal directly as the goal
+  const goal = savedGoal;
 
   // Calculate progress percentage
   const percentage = goal > 0 ? Math.min((wordCount / goal) * 100, 100) : 0;
@@ -38,17 +39,14 @@ const WordGoal = ({ wordCount, savedGoal, onGoalChange }) => {
 
     const numValue = parseInt(value, 10);
     if (!isNaN(numValue) && numValue >= 0) {
-      setGoal(numValue);
       onGoalChange(numValue);
     } else if (value === '') {
-      setGoal(0);
       onGoalChange(0);
     }
   };
 
   // Handle preset selection
   const handlePresetClick = (presetValue) => {
-    setGoal(presetValue);
     setInputValue(presetValue.toString());
     onGoalChange(presetValue);
   };
@@ -118,8 +116,8 @@ const WordGoal = ({ wordCount, savedGoal, onGoalChange }) => {
               key={preset.value}
               onClick={() => handlePresetClick(preset.value)}
               className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${goal === preset.value
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
-                  : 'bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
+                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                : 'bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
                 }`}
               title={preset.description}
             >
@@ -162,8 +160,8 @@ const WordGoal = ({ wordCount, savedGoal, onGoalChange }) => {
 
           {/* Status message */}
           <div className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${isComplete
-              ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30'
-              : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 border border-slate-100 dark:border-slate-700'
+            ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30'
+            : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 border border-slate-100 dark:border-slate-700'
             }`}>
             <div className={`p-1.5 rounded-full ${isComplete ? 'bg-emerald-200 dark:bg-emerald-800' : 'bg-slate-200 dark:bg-slate-700'
               }`}>
