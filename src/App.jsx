@@ -13,6 +13,7 @@ import SocialMediaPresets from './components/SocialMediaPresets';
 import WordGoal from './components/WordGoal';
 import ThemeToggle from './components/ThemeToggle';
 import Toast from './components/Toast';
+import FluidBackground from './components/FluidBackground';
 
 function App() {
   // LocalStorage for text persistence
@@ -95,6 +96,7 @@ function App() {
 
   return (
     <div className="min-h-screen transition-colors flex flex-col">
+      <FluidBackground />
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
