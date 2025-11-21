@@ -8,7 +8,7 @@ import { calculateDensity } from '../utils/keywordExtractor';
 const KeywordDensity = ({ keywords, totalWords }) => {
   if (keywords.length === 0) {
     return (
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+      <div className="glass-panel p-6 rounded-2xl">
         <div className="flex items-center gap-3 mb-6">
           <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
             <Hash className="w-5 h-5" />

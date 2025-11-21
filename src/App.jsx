@@ -18,6 +18,7 @@ import FluidBackground from './components/FluidBackground';
 import AboutModal from './components/AboutModal';
 
 function App() {
+  // Force refresh
   // LocalStorage for text persistence
   const [text, setText] = useLocalStorage('wordCounterText', '');
 
