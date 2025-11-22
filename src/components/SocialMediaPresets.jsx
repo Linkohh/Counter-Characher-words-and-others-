@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AtSign, Check, AlertTriangle, X } from 'lucide-react';
+import { AtSign, Check, AlertTriangle, X, Share2 } from 'lucide-react';
 
 /**
  * Social media character limit presets

@@ -30,7 +30,7 @@ body {
 
 @layer components {
   .glass-panel {
-    @apply bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-white/20 dark:border-slate-700/30 shadow-xl shadow-black/5;
+    @apply bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl backdrop-saturate-150 border border-white/20 dark:border-slate-700/30 shadow-xl shadow-black/5;
   }
 
   .glass-button {

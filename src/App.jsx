@@ -11,7 +11,7 @@ import TextArea from './components/TextArea';
 import KeywordDensity from './components/KeywordDensity';
 import SocialMediaPresets from './components/SocialMediaPresets';
 import WordGoal from './components/WordGoal';
-import { Info } from 'lucide-react';
+import { Info, FileText } from 'lucide-react';
 import ThemeToggle from './components/ThemeToggle';
 import Toast from './components/Toast';
 import FluidBackground from './components/FluidBackground';
